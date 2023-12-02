@@ -138,6 +138,7 @@ class HBNBCommand(cmd.Cmd):
                             setattr(new_instance, attr_name, new_attr2)
             storage.save()
             print(new_instance.id)
+            storage.save()
         else:
             if not args:
                 print("** class name missing **")
