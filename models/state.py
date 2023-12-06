@@ -9,7 +9,7 @@ from os import getenv
 class State(BaseModel):
     """ State class """
     __tablename__ = "states"
-    name = Column(String(128) nullable=False)
+    name = Column(String(128), nullable=False)
     
     # DBStorage
     # the type of storage used
@@ -17,7 +17,7 @@ class State(BaseModel):
         cities = relationship('City', backref='state', cascade='all, delete')
         
     #FileStorage
-    if getenv("HBNB_TYPE_STORAGE") is not None:
+    if getenv('HBNB_TYPE_STORAGE') in (None, 'file'):
         @property
         def cities(self):
             """returns the list of City instances with state_id equals to the current State.id"""
@@ -31,11 +31,3 @@ class State(BaseModel):
                 if value.state_id == self.id:
                     list_cities.append(value)
             return list_cities
-                    
-                    
-                    
-                    
-                    
-                
-            
-    
