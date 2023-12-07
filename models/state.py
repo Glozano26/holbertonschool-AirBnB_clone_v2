@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from os import getenv
 
 
+
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
@@ -14,7 +15,7 @@ class State(BaseModel, Base):
     # DBStorage
     # the type of storage used
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        cities = relationship('City', backref='state', cascade='all, delete')
+        cities = relationship('City', backref='state', cascade='delete')
 
     # FileStorage
     if getenv('HBNB_TYPE_STORAGE') in (None, 'fs'):
