@@ -34,22 +34,26 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query on the current database session"""
-        dic = {}
-        if cls:
-            for obj in self.__session.query(cls).all():
-                dic[type(obj).__name__ + '.' + obj.id] = obj
-        else:
-            for cls in [City, State, User, Place, Amenity, Review]:
-                for obj in self.__session.query(cls).all():
-                    dic[type(obj).__name__ + '.' + obj.id] = obj
-        return dic
+        '''Show all the objects or a specific group'''
+        list_objs = []
+        if cls is None:
+            list_objs += self.__session.query(State).all()
+            list_objs += self.__session.query(City).all()
 
+        else:
+            list_objs = self.__session.query(cls).all()
+        dict_objs = {}
+        for obj in list_objs:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            dict_objs[key] = obj
+
+        return dict_objs
 
     def new(self, obj):
         """add the object to the current database session """
         if obj:
             self.__session.add(obj)
+            self.save()
 
     def save(self):
         """commit all changes of the current database session"""
@@ -57,12 +61,15 @@ class DBStorage:
 
     def delete(self, obj=None):
         """delete from the current database session"""
-        if obj is not None:
+        if obj:
             self.__session.delete(obj)
             self.save()
 
     def reload(self):
         """reload session"""
+        if self.__session:
+            self.__session.close()
+
         Base.metadata.create_all(self.__engine)
 
         # create a new session
