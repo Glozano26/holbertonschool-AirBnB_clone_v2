@@ -11,14 +11,11 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-
-    # DBStorage
-    # the type of storage used
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        cities = relationship('City', backref='state', cascade='delete')
+    cities = relationship('City', backref='state', cascade='all, delete')
+    
 
     # FileStorage
-    if getenv('HBNB_TYPE_STORAGE') in (None, 'fs'):
+    if getenv('HBNB_TYPE_STORAGE') == 'fs':
         @property
         def cities(self):
             """returns the list of City instances with state_id
@@ -33,3 +30,7 @@ class State(BaseModel, Base):
                 if value.state_id == self.id:
                     list_cities.append(value)
             return list_cities
+    
+    # DBStorage
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        cities = relationship('City', backref='state', cascade='all, delete')

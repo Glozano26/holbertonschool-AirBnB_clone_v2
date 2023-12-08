@@ -22,7 +22,7 @@ class DBStorage:
         user = os.getenv('HBNB_MYSQL_USER')
         password = os.getenv('HBNB_MYSQL_PWD')
         host = os.getenv('HBNB_MYSQL_HOST')
-        db = os.getenv('HBNB_MYSQL_DB', 'localhost')
+        db = os.getenv('HBNB_MYSQL_DB')
         env = os.getenv('HBNB_ENV')
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
@@ -34,7 +34,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        '''Show all the objects or a specific group'''
+        '''Show all the objects or a specific class'''
         list_objs = []
         if cls is None:
             list_objs += self.__session.query(State).all()
