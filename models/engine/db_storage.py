@@ -27,8 +27,8 @@ class DBStorage:
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
                                         user, password,
-                                        host, db,
-                                        pool_pre_ping=True))
+                                        host, db),
+                                        pool_pre_ping=True)
 
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -42,6 +42,7 @@ class DBStorage:
 
         else:
             list_objs = self.__session.query(cls).all()
+
         dict_objs = {}
         for obj in list_objs:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
@@ -67,9 +68,10 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
 
         # create a new session
-        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(Session)
+        s_tmp = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(s_tmp)
+        self.__session = Session()
 
     def close(self):
-        """Close the session"""
+        """Close the session working SQLAlchemy"""
         self.__session.close()
