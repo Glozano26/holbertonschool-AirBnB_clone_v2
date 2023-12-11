@@ -6,7 +6,6 @@ import os
  type directly by using an environment variable"""
 if os.getenv('HBNB_TYPE_STORAGE') == 'db':
     from models.engine.db_storage import DBStorage
-    print("se esta usando mysql")
     storage = DBStorage()
     # storage.reload()
 else:
