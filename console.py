@@ -136,9 +136,8 @@ class HBNBCommand(cmd.Cmd):
                             new_attr1 = attr_value.strip('"')
                             new_attr2 = new_attr1.replace("_", " ")
                             setattr(new_instance, attr_name, new_attr2)
-            storage.save()
+            new_instance.save()
             print(new_instance.id)
-            storage.save()
         else:
             if not args:
                 print("** class name missing **")
@@ -147,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             new_instance = HBNBCommand.classes[args[0]]()
-            storage.save()
+            new_instance.save()
             print(new_instance.id)
 
     def help_create(self):
@@ -221,32 +220,41 @@ class HBNBCommand(cmd.Cmd):
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
+    # def do_all(self, args):
+    #     """ Shows all objects, or all objects of a class"""
+    #     print_list = []
+
+    #     if args:
+    #         args = args.split(' ')[0]  # remove possible trailing args
+    #         class_name = args
+    #         if args not in HBNBCommand.classes:
+    #             print("** class doesn't exist **")
+    #             return
+
+    #         for k, v in storage.all().items():
+    #             if k.split('.')[0] == args:
+    #                 print_list.append(str(v))
+    #     else:
+    #         for k, v in storage.all().items():
+    #             print_list.append(str(v))
+
+    #     print(print_list)
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
 
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
-            class_name = args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-
-            """objects = storage.all(HBNBCommand.classes[class_name])
-            for obj in objects.values():
-                print_list.append(str(obj))"""
-
             for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
             for k, v in storage.all().items():
                 print_list.append(str(v))
-            """for cls in HBNBCommand.classes.values():
-                objects = storage.all(cls)
-                for obj in objects.values():
-                    print_list.append(str(obj))"""
-
+        
         print(print_list)
 
     def help_all(self):
