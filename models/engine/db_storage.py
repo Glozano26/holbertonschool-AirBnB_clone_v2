@@ -33,22 +33,6 @@ class DBStorage:
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
-    # def all(self, cls=None):
-    #     '''Show all the objects or a specific class'''
-    #     list_objs = []
-    #     if cls is None:
-    #         list_objs += self.__session.query(State).all()
-    #         list_objs += self.__session.query(City).all()
-
-    #     else:
-    #         list_objs = self.__session.query(cls).all()
-
-    #     dict_objs = {}
-    #     for obj in list_objs:
-    #         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-    #         dict_objs[key] = obj
-
-    #     return dict_objs
     def all(self, cls=None):
         '''Show all the objects or a specific group'''
         list_objs = []
@@ -58,7 +42,7 @@ class DBStorage:
             list_objs += self.__session.query(City).all()
             # list_objs += self.__session.query(Amenity).all()
             list_objs += self.__session.query(Place).all()
-            # list_objs += self.__session.query(Review).all()
+            list_objs += self.__session.query(Review).all()
         else:
             list_objs = self.__session.query(cls).all()
         dict_objs = {}
