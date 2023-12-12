@@ -10,7 +10,8 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 from models.base_model import Base
-
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 class DBStorage:
     """New engine"""
