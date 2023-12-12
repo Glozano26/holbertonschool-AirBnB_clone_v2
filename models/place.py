@@ -30,24 +30,32 @@ class Place(BaseModel, Base):
     longitude = Column(Float(), nullable=True)
     amenity_ids = []
     reviews = relationship('Review', cascade='delete', backref='place')
-    amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
+    amenities = relationship('Amenity', secondary='place_amenity', viewonly=False, overlaps="place_amenities")
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def reviews(self):
             """ Getter of reviews """
-            reviews = models.storage.all(Review)
-            list_reviews = []
-            for r in reviews.values():
-                if self.id == r.place_id:
-                    list_reviews.append(r)
-            return list_reviews
+            from models import storage
+
+            all_reviews = storage.all(Review)
+            places_review = []
+            for review in all_reviews.values():
+                if review.place_id == self.id:
+                    places_review.append(review)
+            return places_review
 
         @property
         def amenities(self):
             """Getter of amenities """
-            return [ame for ame in models.storage.all(Amenity).values()
-                    if ame.id in self.amenity_ids]
+            from models import storage
+            review_dict = storage.all(Review)
+            review_list = []
+            for key, value in review_dict.items():
+                if value.place_id == self.id:
+                    review_list.append(value)
+            return review_list
+            
 
         @amenities.setter
         def amenities(self, amenity):
