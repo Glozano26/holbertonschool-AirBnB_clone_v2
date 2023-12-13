@@ -7,10 +7,10 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/HBNB', strict_slashes=False)
+@app.route('/hbnb', strict_slashes=False)
 def hello_hbnb():
     """Funtion that return a string"""
-    return "<p>HBNB</p>"
+    return "HBNB"
 
 
 if __name__ == '__main__':
