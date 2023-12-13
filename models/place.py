@@ -10,9 +10,12 @@ import models
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-                          Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False),
-                          extend_existing=True)
+                      Column('place_id', String(60), ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False),
+                      extend_existing=True)
 
 
 class Place(BaseModel, Base):
@@ -30,7 +33,8 @@ class Place(BaseModel, Base):
     longitude = Column(Float(), nullable=True)
     amenity_ids = []
     reviews = relationship('Review', cascade='delete', backref='place')
-    amenities = relationship('Amenity', secondary='place_amenity', viewonly=False, overlaps="place_amenities")
+    amenities = relationship('Amenity', secondary='place_amenity',
+                             viewonly=False, overlaps="place_amenities")
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
@@ -55,7 +59,6 @@ class Place(BaseModel, Base):
                 if value.place_id == self.id:
                     review_list.append(value)
             return review_list
-            
 
         @amenities.setter
         def amenities(self, amenity):

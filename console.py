@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[- 1] == '}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, arg, **kwargs):
+    def do_create(self, arg):
         """ Create an object of any class"""
         args = arg.split()
         if len(args) > 1:
@@ -138,6 +138,8 @@ class HBNBCommand(cmd.Cmd):
                             setattr(new_instance, attr_name, new_attr2)
             new_instance.save()
             print(new_instance.id)
+            # storage.save()
+            # print(new_instance.id)
         else:
             if not args:
                 print("** class name missing **")
@@ -148,6 +150,9 @@ class HBNBCommand(cmd.Cmd):
             new_instance = HBNBCommand.classes[args[0]]()
             new_instance.save()
             print(new_instance.id)
+            # storage.save()
+            # print(new_instance.id)
+            # storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -210,7 +215,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -220,7 +225,6 @@ class HBNBCommand(cmd.Cmd):
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
@@ -236,7 +240,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             for k, v in storage.all().items():
                 print_list.append(str(v))
-        
+
         print(print_list)
 
     def help_all(self):
@@ -346,4 +350,5 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
+
     HBNBCommand().cmdloop()
