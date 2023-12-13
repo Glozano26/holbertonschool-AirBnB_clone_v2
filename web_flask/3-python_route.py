@@ -13,7 +13,10 @@ def hello_hbnb(text, text2):
     """replace underscore _ symbols with a space )"""
     decoded_text = urllib.parse.unquote_plus(text)
     text_notspace = decoded_text.replace('_', ' ')
-    return (f'{text_notspace} {text2} is cool')
+    
+    decoded_text2 = urllib.parse.unquote_plus(text2)
+    text_notspace2 = decoded_text.replace('_', ' ')
+    return (f'{text_notspace} {text_notspace2} is cool')
 
 
 if __name__ == '__main__':
