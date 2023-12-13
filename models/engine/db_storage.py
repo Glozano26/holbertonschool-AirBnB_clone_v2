@@ -13,6 +13,7 @@ from models.base_model import Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+
 class DBStorage:
     """New engine"""
     __engine = None
@@ -28,8 +29,7 @@ class DBStorage:
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
                                         user, password,
-                                        host, db),
-                                        pool_pre_ping=True)
+                                        host, db), pool_pre_ping=True)
 
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -56,7 +56,7 @@ class DBStorage:
     def new(self, obj):
         """add the object to the current database session """
         self.__session.add(obj)
-        
+
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
