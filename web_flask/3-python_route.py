@@ -8,6 +8,16 @@ import urllib.parse
 app = Flask(__name__)
 
 
+@app.route('/')
+def index():
+    return "¡Hola HBNB!"
+
+
+@app.route('/hbnb')
+def hbnb():
+    return "HBNB"
+
+
 @app.route('/c/<path:text>')
 def show_c(text):
     """replace underscore _ symbols with a space )"""
