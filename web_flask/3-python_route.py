@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', strict_slashes=False)
 def hello_hbnb():
-    return "¡Hello HBNB!"
+    return "Hello HBNB!"
 
 
 @app.route('/hbnb', strict_slashes=False)
@@ -18,7 +18,7 @@ def hbnb():
     return "HBNB"
 
 
-@app.route('/c/<path:text>', strict_slashes=False)
+@app.route('/c/<text>', strict_slashes=False)
 def show_c(text):
     """replace underscore _ symbols with a space )"""
     decoded_text = urllib.parse.unquote_plus(text)
@@ -26,8 +26,9 @@ def show_c(text):
     return (f'{text_notspace}')
 
 
-@app.route('/python/<path:text>', strict_slashes=False)
-def show_python(text):
+@app.route('/python/')
+@app.route('/python/<text>', strict_slashes=False)
+def show_python(text="is cool"):
     decoded_text = urllib.parse.unquote_plus(text)
     text_notspace = decoded_text.replace('_', ' ')
     return (f"Python {text_notspace}")
