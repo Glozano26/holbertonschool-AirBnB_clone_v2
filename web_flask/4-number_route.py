@@ -35,8 +35,8 @@ def show_python(text="is cool"):
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def show_number(n="is a number"):
-    return f'{n}'
+def show_number(n):
+    return f'{n} is a number'
 
 
 if __name__ == '__main__':
