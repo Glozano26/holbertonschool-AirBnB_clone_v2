@@ -2,6 +2,7 @@
 """Write a script that starts a Flask web application"""
 
 from flask import Flask
+from flask import render_template
 import urllib.parse
 
 
@@ -32,6 +33,16 @@ def show_python(text="is cool"):
     decoded_text = urllib.parse.unquote_plus(text)
     text_notspace = decoded_text.replace('_', ' ')
     return (f"Python {text_notspace}")
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def show_number(n):
+    return f'{n} is a number'
+
+
+@app.route('/number_template/<n>', strict_slashes=False)
+def number_H1(n):
+    return render_template('5-number.html', n)
 
 
 if __name__ == '__main__':
