@@ -45,13 +45,13 @@ def number_H1(n):
     return render_template('5-number.html', n=n)
 
 
-@app.route('/number_odd_or_even/<n>', strict_slashes=False)
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def even_and_odd(n):
     if n % 2 == 0:
-        odd_even = n
+        total = 'even'
     else:
-        odd_even = n
-    return render_template('6-number_odd_or_even.html', odd_even=odd_even)
+        total = 'odd'
+    return render_template('6-number_odd_or_even.html', n=n, total=total)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
