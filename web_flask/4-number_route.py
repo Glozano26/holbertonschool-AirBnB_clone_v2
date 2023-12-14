@@ -33,10 +33,11 @@ def show_python(text="is cool"):
     text_notspace = decoded_text.replace('_', ' ')
     return (f"Python {text_notspace}")
 
+
 @app.route('/number/<int:n>', strict_slashes=False)
-def show_number(n):
+def show_number(n="is a number"):
     return f'{n}'
-    
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
