@@ -26,7 +26,7 @@ def show_c(text):
     return (f'{text_notspace}')
 
 
-@app.route('/python/<path:text>' strict_slashes=False)
+@app.route('/python/<path:text>', strict_slashes=False)
 def show_python(text):
     decoded_text = urllib.parse.unquote_plus(text)
     text_notspace = decoded_text.replace('_', ' ')
@@ -35,3 +35,4 @@ def show_python(text):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+    
