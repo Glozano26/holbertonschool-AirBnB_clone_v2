@@ -26,7 +26,7 @@ def show_c(text):
     return (f'{text_notspace}')
 
 
-@app.route('/python/<path:text>', strict_slashes=False)
+@app.route('/python/<path:text>', defaults={'text': 'is_cool'}, strict_slashes=False)
 def show_python(text):
     decoded_text = urllib.parse.unquote_plus(text)
     text_notspace = decoded_text.replace('_', ' ')
