@@ -20,7 +20,8 @@ def sorted_cities_states():
     for state in states_sorted:
         cities = sorted(state.cities, key=attrgetter('name'))
         cities_states[state] = cities
-    return render_template('8-cities_by_states.html', states_cities=cities_states)
+    return render_template('8-cities_by_states.html',
+                           states_cities=cities_states)
 
 
 @app.teardown_appcontext
