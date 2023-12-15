@@ -6,7 +6,7 @@ DOCTYPE html>
     <BODY>
         <H1>States</H1>
         <UL>
-            {% for state, cities in states_and_cities.items() %}
+            {% for state, cities in states_cities.items() %}
                 <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
                 <UL>
                     {% for city in cities %}
