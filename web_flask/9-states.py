@@ -11,17 +11,12 @@ from operator import attrgetter
 app = Flask(__name__)
 
 
-@app.route('/cities_by_states', strict_slashes=False)
-def sorted_cities_states():
-    """List of all Cities objects present in State"""
-    states = storage.all(State).values()
-    states_sorted = sorted(states, key=attrgetter('name'))
-    cities_states = {}
-    for state in states_sorted:
-        cities = sorted(state.cities, key=attrgetter('name'))
-        cities_states[state] = cities
-    return render_template('8-cities_by_states.html',
-                           states_cities=cities_states)
+@app.route('/states', strict_slashes=False)
+def states_list():
+    """/states_list route"""
+    states_list = list(storage.all(State).values())
+    states_list.sort(key=lambda x: x.name)
+    return render_template('9-states.html', states=states_list)
 
 
 @app.route('/states/<id>', strict_slashes=False)
