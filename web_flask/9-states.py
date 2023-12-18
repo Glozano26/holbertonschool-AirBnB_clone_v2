@@ -21,7 +21,7 @@ def states_list():
 
 @app.route('/states/<id>', strict_slashes=False)
 def state_cities_list(id=None):
-    """/cities_by_states route"""
+    """Displays cities of a specific State"""
     e = None
     states = storage.all(State)
     c = list(storage.all(City).values())

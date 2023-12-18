@@ -17,43 +17,50 @@
             <section class="filters">
                 <div class="locations">
                     <h3>States</h3>
-                    <h4>&nbsp;</h4>
-                    <h4>California, Arizona</h4>
-                    <ul class="popover">
-                        {% if state -%}
-                        <li>
-                            <h2>{{ state.name }}</h2>
-                            <ul>
-                                {% for city in cities -%}
-                                    {% if state.id == city.state_id %}
-                                    <li>{{ city.name }}</li>
-                                    {% endif %}
-                                {%- endfor %}
-                            </ul>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="amenities">
-                    <h3>Amenities</h3>
-                    <h4>&nbsp;</h4>
-                    <h4>Internet, kitchen</h4>
+                    <h4>
+                        {% for state in states %}
+                            {{ state.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </h4>
                     <div class="popover">
-                            <ul class="no-bullets">
-                                <li><p>Internet</p></li>
-                                <li><p>TV</p></li>
-                                <li><p>kitchen</p></li>
-                                <li><p>Iron</p></li>
-                            </ul>
+                        {% for state in states %}
+                            <li>
+                                <h2>{{ state.name }}:</h2>
+                                <ul class="no-bullets">
+                                    {% for city in state.cities %}
+                                        <li><p>{{ city.name }}</p></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
+    
+                <div class="amenities">
+                    <h3>Amenities</h3>
+                    <h4>
+                        {% for amenity in amenities %}
+                            {{ amenity.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </h4>
+                    <div class="popover">
+                        <li>
+                            <ul class="no-bullets">
+                                {% for amenity in amenities %}
+                                    <li><p>{{ amenity.name }}</p></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </div>
+                </div>
+    
                 <button>Search</button>
             </section>
         </div>
+    
         <footer>
             <p>Holberton School</p>
         </footer>
     </body>
-    
 </html>
+                    

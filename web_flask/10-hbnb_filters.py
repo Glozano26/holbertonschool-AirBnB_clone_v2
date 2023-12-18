@@ -12,17 +12,30 @@ from operator import attrgetter
 app = Flask(__name__)
 
 
+def sort_by_name(obj):
+    return obj.name
+
+
 @app.route('/hbnb_filters', strict_slashes=False)
-def states_list():
+def filters():
     """/states_list route"""
     states = storage.all(State)
-    amenities = storage.all(Amenity)
-    return render_template('10-hbnb_filters.html',
-                           states=states, amenities=amenities)
+    states_sorted = sorted(states, key=sort_by_name)
+
+    cities = []
+    for state in states_sorted:
+        cities.extend(sorted(state.cities, key=sort_by_name))
+
+    amenities = storage.all(Amenity).values()
+    amenities_sorted = sorted(amenities, key=sort_by_name)
+
+    return render_template('10-hbnb_filters.html', states=states_sorted,
+                           cities=cities,
+                           amenities=amenities_sorted)
 
 
 @app.teardown_appcontext
-def session_close(*args, **kwargs):
+def session_close(exception):
     """Close the current SQLAlchemy Session"""
     storage.close()
 
