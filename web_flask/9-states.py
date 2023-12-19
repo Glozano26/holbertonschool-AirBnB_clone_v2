@@ -1,14 +1,17 @@
 #!/usr/bin/python3
-"""Write a script that starts a Flask web application"""
+""" Script that starts a Flask web application """
+
 
 from flask import Flask, render_template
 from models import storage
-from models.state import State
-from models.city import City
-from operator import attrgetter
-
+from models.state import State, City
 
 app = Flask(__name__)
+
+
+@app.teardown_appcontext
+def close_database(exc):
+    storage.close()
 
 
 @app.route('/states', strict_slashes=False)
@@ -21,7 +24,7 @@ def states_list():
 
 @app.route('/states/<id>', strict_slashes=False)
 def state_cities_list(id=None):
-    """Displays cities of a specific State"""
+    """/cities_by_states route"""
     e = None
     states = storage.all(State)
     c = list(storage.all(City).values())
@@ -31,12 +34,6 @@ def state_cities_list(id=None):
         if key in states.keys():
             e = states[key]
     return render_template('9-states.html', cities=c, state=e, id=id)
-
-
-@app.teardown_appcontext
-def session_close(exception):
-    """Close the current SQLAlchemy Session"""
-    storage.close()
 
 
 if __name__ == '__main__':

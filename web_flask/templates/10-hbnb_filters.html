@@ -17,43 +17,32 @@
             <section class="filters">
                 <div class="locations">
                     <h3>States</h3>
-                    <h4>
-                        {% for state in states %}
-                            {{ state.name }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </h4>
-                    <div class="popover">
-                        {% for state in states %}
-                            <li>
-                                <h2>{{ state.name }}:</h2>
-                                <ul class="no-bullets">
-                                    {% for city in state.cities %}
-                                        <li><p>{{ city.name }}</p></li>
+                    <h4>&nbsp;</h4>
+                    <ul class="popover">
+                        {% for state, value in states.items() %}
+                        <li>
+                            <h2>{{ value.name }}:</h2>
+                            <ul class="no-bullets">
+                                    {% for city, obj in city.items() %}
+                                        {% if obj.state_id == value.id %}
+                                            <li><p>{{ obj.name }}</p></li>
+                                        {% endif %}
                                     {% endfor %}
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
                         {% endfor %}
-                    </div>
+                    </ul>
                 </div>
     
                 <div class="amenities">
                     <h3>Amenities</h3>
-                    <h4>
-                        {% for amenity in amenities %}
-                            {{ amenity.name }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </h4>
-                    <div class="popover">
-                        <li>
-                            <ul class="no-bullets">
-                                {% for amenity in amenities %}
-                                    <li><p>{{ amenity.name }}</p></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </div>
+                    <h4>&nbsp;</h4>
+                    <ul class="popover">
+                            {% for amenity, serv in amenities.items() %}
+                                <li>{{ serv.name }}</li>
+                            {% endfor %}
+                    </ul>
                 </div>
-    
                 <button>Search</button>
             </section>
         </div>
